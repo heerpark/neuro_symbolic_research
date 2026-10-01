@@ -1,0 +1,14 @@
+diff --git a/anesi/experiments/mnist_op/mnistop.py b/anesi/experiments/mnist_op/mnistop.py
+index 2745190..c797af3 100644
+--- a/anesi/experiments/mnist_op/mnistop.py
++++ b/anesi/experiments/mnist_op/mnistop.py
+@@ -137,7 +137,8 @@ if __name__ == '__main__':
+             x = torch.cat([numb1, numb2], dim=1).to(device)
+             label = label.to(device)
+             try:
+-                loss_nrm, loss_percept = model.train_all(x, label)
++                _train_result = model.train_all(x, label)
++                loss_nrm, loss_percept = _train_result.q_loss, _train_result.percept_loss
+             except NoPossibleActionsException:
+                 print("No possible actions during training")
+                 continue

@@ -1,0 +1,51 @@
+# Derived from third_party/anesi/anesi/experiments/mnist_op/repeat/test_add_predict_only.yaml
+# (the "A-NeSI (predict)" variant), pinned commit 2c55d614132b40f25c69d09b4e140e80d21120b1,
+# with N fixed to 1 (that file grid-sweeps N in {1,2,3,...,15,10}; we run one N per our own
+# seed loop instead of via wandb sweep/agent, since sweeps require the W&B cloud service).
+#
+# NOTE: the original yaml uses key names nrm_lr / nrm_loss, which do NOT match any config
+# key actually read by mnistop.py/anesi.py (the real keys are q_lr / q_loss) -- verified by
+# grepping the source. This looks like dead/stale keys in their own sweep configs across the
+# whole repo, not something specific to our reproduction. Values still coincide with the
+# defaults (q_lr=0.001, q_loss='mse'), so this doesn't change what was actually run upstream;
+# we use the correct key names here so our config actually controls what it claims to.
+#
+# NOTE 2: mnistop.py's own default dict and every repeat/*.yaml (including this one's
+# source) use the key "amt_samples", but ANeSIBase.__init__ (anesi.py) requires a
+# positional/keyword arg named "amount_samples" with no default -- confirmed by running
+# the official code unmodified at the pinned commit, which crashes with
+# "TypeError: __init__() missing 1 required positional argument: 'amount_samples'" even
+# using their own shipped defaults. This is an upstream bug/drift (the repo has commits
+# after the NeurIPS 2023 paper; likely a rename that wasn't propagated to configs), not
+# something introduced by our reproduction. Fix applied here (not by patching their
+# source): use the correct key name "amount_samples" directly; ANeSIBase.__init__ accepts
+# **kwargs so this requires no other change.
+use_cuda: true
+DEBUG: false
+N: 1
+op: add
+y_encoding: base10
+w_encoding: base10
+model: full
+test: true
+batch_size: 16
+batch_size_test: 16
+amount_samples: 600
+predict_only: true
+use_prior: true
+q_lr: 0.001
+q_loss: mse
+policy: 'off'
+perception_lr: 0.001
+perception_loss: log-q
+percept_loss_pref: 1
+epochs: 100
+log_per_epoch: 10
+layers: 3
+hidden_size: 800
+prune: false
+dirichlet_init: 0.1
+dirichlet_lr: 0.01
+dirichlet_iters: 50
+dirichlet_L2: 900000
+K_beliefs: 2500

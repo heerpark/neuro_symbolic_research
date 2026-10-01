@@ -1,0 +1,17 @@
+# conda env: neuro_symbolic (already created; this file documents it for reproducibility)
+# Create with: conda create -n neuro_symbolic python=3.10
+#              conda activate neuro_symbolic
+#              pip install -r requirements.txt
+name: neuro_symbolic
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - torch==2.14.0
+      - torchvision==0.29.0
+      - LTNtorch==1.0.2
+      - numpy==1.26.4
+      - pyyaml==6.0.3
+      - pytest==9.1.1

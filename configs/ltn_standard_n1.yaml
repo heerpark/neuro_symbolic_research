@@ -1,0 +1,18 @@
+exp_name: ltn_standard_n1
+n_digits: 1
+batch_size: 16
+eval_batch_size: 256
+epochs: 20
+lr: 0.001
+val_frac: 0.10
+data_root: ./data/mnist_raw
+p_forall: 2
+p_schedule:
+  0: 1
+  5: 2
+  10: 4
+  15: 6
+aggregator:
+  name: sum
+  lam: 1.0
+probe_gradients: false

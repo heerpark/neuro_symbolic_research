@@ -1,0 +1,6 @@
+torch==2.14.0
+LTNtorch==1.0.2
+torchvision
+numpy==1.26.4
+pyyaml
+pytest

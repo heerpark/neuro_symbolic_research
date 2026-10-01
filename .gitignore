@@ -1,0 +1,10 @@
+runs/
+data/mnist_raw/
+third_party/deepsoftlog/
+third_party/anesi/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+wandb/
+.DS_Store
